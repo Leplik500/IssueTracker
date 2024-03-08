@@ -1,10 +1,16 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker", "IssueTracker\IssueTracker.csproj", "{F10DF61A-7525-4EA4-A6B5-99F57EE91D90}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F} = {9038B9C0-2BD7-4B23-B712-C450B1CBEF0F}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{370E10AF-AF85-4633-B386-B810C72C92B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.Domain", "IssueTracker.Domain\IssueTracker.Domain.csproj", "{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{3ADFC88E-62D7-4BE5-8EF4-19B77A476C45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.DAL", "IssueTracker.DAL\IssueTracker.DAL.csproj", "{9A97373F-8769-4AA6-A752-C624F91667C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,15 +19,20 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F10DF61A-7525-4EA4-A6B5-99F57EE91D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F10DF61A-7525-4EA4-A6B5-99F57EE91D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F10DF61A-7525-4EA4-A6B5-99F57EE91D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F10DF61A-7525-4EA4-A6B5-99F57EE91D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10DF61A-7525-4EA4-A6B5-99F57EE91D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A97373F-8769-4AA6-A752-C624F91667C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A97373F-8769-4AA6-A752-C624F91667C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A97373F-8769-4AA6-A752-C624F91667C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A97373F-8769-4AA6-A752-C624F91667C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{9A97373F-8769-4AA6-A752-C624F91667C1} = {3ADFC88E-62D7-4BE5-8EF4-19B77A476C45}
 		{9038B9C0-2BD7-4B23-B712-C450B1CBEF0F} = {370E10AF-AF85-4633-B386-B810C72C92B6}
 	EndGlobalSection
 EndGlobal
