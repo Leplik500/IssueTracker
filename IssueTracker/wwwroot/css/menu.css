@@ -1,4 +1,6 @@
-.menu {
+/** {box-sizing: border-box; margin: 0;}*/
+
+div > ul.menu {
     display: flex;
     list-style: none;
     flex-direction: row;
@@ -10,41 +12,47 @@
     color: black;
     font-size: 18px !important;
     padding: 0 0 0 0;
+    border-width: 0 0 0 0;
     position: fixed;
-    margin: 0;
+    margin: 0 0 0 0;
     left: 0;
-    z-index: 999;
+    top: 0;
+    z-index: 2;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-div.navbar {
-    display: table-row;
-    /*flex-direction: row;*/
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    height: 10%;
+#trigger > .navbar, .navbar > .submenu {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+    /*width: 100%;*/
+    /*height: 1%; !important;*/
     background-color: whitesmoke;
     color: black;
     font-size: 18px !important;
     padding: 0 0 0 0;
-    position: fixed;
-    margin: 0 auto;
+    position: relative;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    top: 30px;
     left: 0;
-    z-index: 999;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+    list-style: none;
+    transition: .4s ease-in-out;
 }
 
-ul.submenu {
-    display: inherit;
-    flex-direction: inherit;
-    justify-content: inherit;
-    align-items: inherit;
-    position: inherit;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+/*ul.submenu {*/
+/*    !*display: inherit;*!*/
+/*    !*flex-direction: inherit;*!*/
+/*    !*justify-content: inherit;*!*/
+/*    !*align-items: inherit;*!*/
+/*    !*position: inherit;*!*/
+/*    list-style: none;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
 
 ul.submenu > li {
     display: inline-block;
@@ -59,11 +67,11 @@ a.submenu-item {
     text-decoration: none;
 }
 
-div.navbar {
+#trigger > .navbar {
     display: none;
 }
 
-#menu:hover div.navbar {
+#trigger:hover .navbar {
     display: block;
 }
 
@@ -71,3 +79,4 @@ div.navbar {
 /*.submenu > li:last-child {*/
 /*    margin-right: 0;*/
 /*}*/
+

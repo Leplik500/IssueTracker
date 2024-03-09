@@ -29,6 +29,20 @@
             </li>
             <li id="trigger">
                 <a class="link submenu-item"> Links </a>
+                <div class="navbar">
+                    <ul class="submenu">
+                        <li>
+                            @* <a href="http://localhost:5279/Index">Home</a> *@
+                            <a class="link submenu-item" asp-controller="Landing" asp-action="Index">Home</a>
+                        </li>
+                        <li>
+                            <a class="link submenu-item" asp-controller="Landing" asp-action="Pricing">Pricing</a>
+                        </li>
+                        <li>
+                            <a class="link submenu-item" asp-controller="Landing" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li>
                 <a class="link submenu-item"> Four </a>
@@ -37,20 +51,6 @@
                 <a class="link submenu-item" asp-controller="Landing" asp-action="Index">Home</a>
             </li>
         </ul>
-        <div class="navbar">
-            <ul class="submenu">
-                <li>
-                    @* <a href="http://localhost:5279/Index">Home</a> *@
-                    <a class="link submenu-item" asp-controller="Landing" asp-action="Index">Home</a>
-                </li>
-                <li>
-                    <a class="link submenu-item" asp-controller="Landing" asp-action="Pricing">Pricing</a>
-                </li>
-                <li>
-                    <a class="link submenu-item" asp-controller="Landing" asp-action="Privacy">Privacy</a>
-                </li>
-            </ul>
-        </div>
     </div>
 
 </header>
