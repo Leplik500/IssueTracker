@@ -19,19 +19,35 @@
 </head>
 <body>
 <header>
-    <div id="menu">
-        <p class=message> trigger </p>
+    <div>
+        <ul class="menu">
+            <li>
+                <a class="link submenu-item"> One </a>
+            </li>
+            <li>
+                <a class="link submenu-item"> Two </a>
+            </li>
+            <li id="trigger">
+                <a class="link submenu-item"> Links </a>
+            </li>
+            <li>
+                <a class="link submenu-item"> Four </a>
+            </li>
+            <li>
+                <a class="link submenu-item" asp-controller="Landing" asp-action="Index">Home</a>
+            </li>
+        </ul>
         <div class="navbar">
             <ul class="submenu">
                 <li>
                     @* <a href="http://localhost:5279/Index">Home</a> *@
-                    <a class="link menu-item" asp-controller="Landing" asp-action="Index">Home</a>
+                    <a class="link submenu-item" asp-controller="Landing" asp-action="Index">Home</a>
                 </li>
                 <li>
-                    <a class="link menu-item" asp-controller="Landing" asp-action="Pricing">Pricing</a>
+                    <a class="link submenu-item" asp-controller="Landing" asp-action="Pricing">Pricing</a>
                 </li>
                 <li>
-                    <a class="link menu-item" asp-controller="Landing" asp-action="Privacy">Privacy</a>
+                    <a class="link submenu-item" asp-controller="Landing" asp-action="Privacy">Privacy</a>
                 </li>
             </ul>
         </div>
