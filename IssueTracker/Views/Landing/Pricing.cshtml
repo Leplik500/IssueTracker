@@ -1,8 +1,42 @@
 @model dynamic
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Pricing";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<table id="pricing-table">
+    <caption> Pricing list </caption>
+    <thead>
+    <tr>
+        <th scope="col">Feature</th>
+        <th scope="col">Free Version</th>
+        <th scope="col">For individuals</th>
+        <th scope="col">For Companies</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">Issue Management</th>
+        <td>+</td> <td>+</td> <td>+</td>
+    </tr>
+    <tr>
+        <th scope="row">Reporting and Analytics</th>
+        <td>+</td> <td>+</td> <td>+</td>
+    </tr>
+    <tr>
+        <th scope="row">Workflow Customization</th>
+        <td>-</td> <td>+</td> <td>+</td>
+    </tr>
+    <tr>
+        <th scope="row">Team Collobaration</th>
+        <td>-</td> <td>-</td> <td>+</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th scope="row">Price</th>
+        <td>0</td> <td>3</td> <td>14</td>
+    </tr>
+    </tfoot>
+</table>

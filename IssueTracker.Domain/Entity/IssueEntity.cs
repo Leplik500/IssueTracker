@@ -11,7 +11,7 @@ public class IssueEntity
     public IssueStatus IssueStatus { get; set; }
     public long ProjectId { get; set; }
     public List<FileInfo> Attachments { get; set; }
-    public List<String> tags { get; set; }
+    public List<string> tags { get; set; }
     public List<UserEntity> Assignees { get; set; }
-    public List<String> Comments { get; set; }
+    public List<string> Comments { get; set; }
 }

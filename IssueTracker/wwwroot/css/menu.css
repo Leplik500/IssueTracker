@@ -67,6 +67,19 @@ a.submenu-item {
     text-decoration: none;
 }
 
+@keyframes slidein {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slidein 6s ease-in-out;
+}
+
 #trigger > .navbar {
     display: none;
 }

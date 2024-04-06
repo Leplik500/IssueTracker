@@ -18,4 +18,14 @@ public class LandingController : Controller
     {
         return View();
     }
+
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    public IActionResult Login()
+    {
+        return View();
+    }
 }

@@ -40,10 +40,15 @@ html {
     html {
         font-size: 16px;
     }
+
+    .link {
+        font-size: 16px;
+    }
 }
 
 body {
     margin-bottom: 60px;
+    margin-top: 17%;
 }
 
 img {
@@ -80,6 +85,12 @@ img {
     color: darkslateblue;
 }
 
+.big-link {
+    font-size: 14px;
+    font-family: "Nova Mono", "Consolas", monospace;
+    color: darkslateblue;
+}
+
 #link-to-top::after {
     content: "↑";
 }
@@ -87,3 +98,34 @@ img {
 #link-to-start::after {
     content: "↓";
 }
+
+fieldset {
+    border: none;
+}
+
+.error {
+    color: orangered;
+    /*display: block;*/
+}
+
+input {
+    width: 100%;
+    padding: 3px 5px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/*input:required:valid:not(:placeholder-shown) {*/
+/*    border-color: green;*/
+/*}*/
+
+/*input:required:invalid:not(:placeholder-shown) {*/
+/*    border-color: red;*/
+/*}*/
+
+/*input:focus {*/
+/*    border: 3px solid rgba(169, 169, 169, 0.9);*/
+/*}*/

@@ -1,0 +1,40 @@
+@model dynamic
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<form action="#"
+      id="loginForm">
+    <fieldset>
+        <p>
+            <label for="emailf"> Email*</label>
+            <input id="emailf"
+                   name="emailf"
+                   required
+                   type="email"/>
+        </p>
+        <p>
+            <label for="passwordf"> Password*</label>
+            <input id="passwordf"
+                   name="passwordf"
+                   required
+                   type="password"/>
+        </p>
+        <p>
+            Don't have an account?
+            <a asp-action="Register"
+               asp-controller="Landing"
+               class="link">
+                Register
+            </a>
+        </p>
+        <input name="submit"
+               type="submit"
+               value="Send">
+    </fieldset>
+</form>
+
+@section Scripts {
+    <script src="~/js/login.js"></script>
+}

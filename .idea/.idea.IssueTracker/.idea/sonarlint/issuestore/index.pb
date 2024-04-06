@@ -167,3 +167,5 @@ Q
 !IssueTracker/wwwroot/css/menu.css,d/3/d345c81f704b912ae0a3e64160fcbb16205279c7
 X
 (IssueTracker.DAL/IssueTracker.DAL.csproj,3/5/35725ab710ba33f213ecc0b7b943b100f2741b49
+R
+"IssueTracker/wwwroot/css/table.css,0/5/05d578c1e3c87a6e2a2c74ac411518bc6a0a2d83
