@@ -34,7 +34,8 @@ jQuery('#registerForm').validate({
         messages: {
             password: {
                 required: "Please enter a password",
-                rangelength: "Your password must be between 8 and 32 characters long"
+                rangelength: "Your password must be between 8 and 32 characters long",
+                pattern: "Your password must contain at least one uppercase, one lowercase, one number and one special character"
             },
             email: {
                 required: "Please enter an email",
@@ -53,12 +54,12 @@ jQuery('#registerForm').validate({
             firstName: {
                 required: "Please enter a first name",
                 pattern: "Your first name must contain only letters and first letter must be capitalized",
-                rangelength: [3, 16],
+                rangelength: "Your first name must be between 3 and 16 characters long",
             },
             lastName: {
                 // required: "Please enter a last name",
                 pattern: "Your last name must contain only letters and first letter must be capitalized",
-                rangelength: [3, 16],
+                rangelength: "Your last name must be between 3 and 16 characters long",
             }
         },
         onfocusout: function (element) {
@@ -69,3 +70,19 @@ jQuery('#registerForm').validate({
         }
     }
 )
+
+// try on submit
+$('#createUser').on('click', function (event) {
+    event.preventDefault();
+    $.ajax({
+        url: '/Create',
+        method: 'POST',
+        data: $('#registerForm').serialize(),
+        success: function (data) {
+            console.log(data)
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    })
+});

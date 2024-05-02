@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IssueTracker.Domain.ViewModels.User;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IssueTracker.Controllers;
 
@@ -27,5 +28,11 @@ public class LandingController : Controller
     public IActionResult Login()
     {
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateUserViewModel model)
+    {
+        return Ok();
     }
 }

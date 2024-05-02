@@ -10,5 +10,5 @@ public class AppDbContext : DbContext
         Database.EnsureCreated();
     }
 
-    public DbSet<IssueEntity> Issues { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
 }

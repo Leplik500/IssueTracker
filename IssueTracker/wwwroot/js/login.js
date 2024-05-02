@@ -10,7 +10,7 @@ $(function () {
                 email: {
                     required: true,
                     rangelength: [8, 32],
-                    pattern: /^[\w\-.]+@([\w-]+\.)+[\w-]{2,}$/,
+                    pattern:/[^@\s]+@[^@\s]+\.[^@\s]+$/,
                     email: true
                 }
             },
@@ -24,7 +24,7 @@ $(function () {
             onfocusout: function (element) {
                 this.element(element); // triggers validation
             },
-            onkeyup: function (element, event) {
+            onkeyup: function (element) {
                 this.element(element); // triggers validation
             }
         }
