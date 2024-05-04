@@ -2,7 +2,7 @@ using IssueTracker.Domain.Entity;
 using IssueTracker.Domain.Response;
 using IssueTracker.Domain.ViewModels.User;
 
-namespace IssueTracker.Service.Interface;
+namespace IssueTracker.Service.Interfaces;
 
 public interface IUserService
 {

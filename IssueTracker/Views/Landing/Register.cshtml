@@ -1,4 +1,5 @@
 @model dynamic
+@using IssueTracker.Domain.Enum
 
 @{
     ViewBag.Title = "title";
@@ -36,7 +37,7 @@
                    type="password"/>
         </p>
         <p>
-            <label for="confirmPassword"> Password*</label>
+            <label for="confirmPassword"> Confirm password*</label>
             <input id="confirmPassword"
                    name="confirmPassword"
                    required
@@ -48,6 +49,14 @@
                    name="age"
                    required
                    type="number"/>
+        </p>
+        <p>
+            <label for="role"> Role*</label>
+            <select asp-items="Html.GetEnumSelectList<UserRole>()"
+                    id="role"
+                    name="role"
+                    required>
+            </select>
         </p>
         <p>
             Already have an account?

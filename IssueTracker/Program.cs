@@ -1,4 +1,9 @@
 using IssueTracker.DAL;
+using IssueTracker.DAL.Interfaces;
+using IssueTracker.DAL.Repositories;
+using IssueTracker.Domain.Entity;
+using IssueTracker.Service.Implementations;
+using IssueTracker.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("Postgres");

@@ -7,7 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\IssueTracker.DAL\IssueTracker.DAL.csproj" />
       <ProjectReference Include="..\IssueTracker.Domain\IssueTracker.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CryptoHelper" Version="4.0.0" />
     </ItemGroup>
 
 </Project>

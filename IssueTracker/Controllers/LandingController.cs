@@ -1,10 +1,19 @@
-﻿using IssueTracker.Domain.ViewModels.User;
+﻿using IssueTracker.Domain.Response;
+using IssueTracker.Domain.ViewModels.User;
+using IssueTracker.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IssueTracker.Controllers;
 
 public class LandingController : Controller
 {
+    private readonly IUserService _userService;
+
+    public LandingController(IUserService userService)
+    {
+        _userService = userService;
+    }
+
     public IActionResult Index()
     {
         return View();
@@ -33,6 +42,11 @@ public class LandingController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateUserViewModel model)
     {
-        return Ok();
+        var response = await _userService.Create(model);
+        if (response.StatusCode == Domain.Enum.StatusCode.OK)
+        {
+            return Ok(new {description = response.Description});
+        }
+        return BadRequest(new {description = response.Description});
     }
 }

@@ -71,18 +71,19 @@ jQuery('#registerForm').validate({
     }
 )
 
-// try on submit
 $('#createUser').on('click', function (event) {
     event.preventDefault();
     $.ajax({
         url: '/Create',
         method: 'POST',
         data: $('#registerForm').serialize(),
-        success: function (data) {
-            console.log(data)
+        success: function (response) {
+            alert("User created successfully")
+            console.log(response)
         },
-        error: function (data) {
-            console.log(data)
+        error: function (response) {
+            alert("User not created")
+            console.log(response)
         }
     })
 });
