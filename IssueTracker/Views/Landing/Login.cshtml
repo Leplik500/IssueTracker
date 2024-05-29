@@ -1,23 +1,27 @@
 @model dynamic
+@using IssueTracker.Domain.Enum
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+
 <form action="#"
       id="loginForm">
     <fieldset>
         <p>
-            <label for="emailf"> Email*</label>
-            <input id="emailf"
-                   name="emailf"
+            <label for="email"> Email*</label>
+            <input id="email"
+                   name="email"
+                   pattern="[^@@\s]+@@[^@@\s]+\.[^@@\s]+"
                    required
+                   title="Email must contain @@,. and domen"
                    type="email"/>
         </p>
         <p>
-            <label for="passwordf"> Password*</label>
-            <input id="passwordf"
-                   name="passwordf"
+            <label for="password"> Password*</label>
+            <input id="password"
+                   name="password"
                    required
                    type="password"/>
         </p>
@@ -29,9 +33,9 @@
                 Register
             </a>
         </p>
-        <input name="submit"
-               type="submit"
-               value="Send">
+        <button id="loginUser">
+            Login
+        </button>
     </fieldset>
 </form>
 
