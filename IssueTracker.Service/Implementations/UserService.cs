@@ -1,7 +1,4 @@
-using System.Security.Cryptography;
-using CryptoHelper;
 using IssueTracker.DAL.Interfaces;
-using IssueTracker.Domain.Entity;
 using IssueTracker.Domain.Enum;
 using IssueTracker.Domain.Response;
 using IssueTracker.Domain.ViewModels.User;
@@ -31,6 +28,7 @@ public class UserService : IUserService
             var user = await _userRepository
                 .GetAll()
                 .FirstOrDefaultAsync(x => x.Email == model.Email);
+
             if (user != null)
                 return new BaseResponse<UserEntity>()
                 {
@@ -45,11 +43,11 @@ public class UserService : IUserService
                 LastName = model.LastName,
                 // Avatar = model.Avatar,
                 Email = model.Email,
-                Salt = GenerateSalt(),
                 Age = model.Age,
                 Created = DateTime.UtcNow
             };
-            user.PasswordAndSaltHash = Crypto.HashPassword(String.Concat(model.Password, user.Salt));
+
+            user.HashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
             await _userRepository.Create(user);
             return new BaseResponse<UserEntity>()
@@ -69,13 +67,44 @@ public class UserService : IUserService
         }
     }
 
-    private string GenerateSalt(int saltLength = 16)
+    public async Task<IBaseResponse<UserEntity>> Authenticate(CreateUserViewModel model)
     {
-        byte[] randomBytes = new byte[saltLength];
-        using (var rng = RandomNumberGenerator.Create())
+        try
         {
-            rng.GetBytes(randomBytes);
+            _logger.LogInformation($"Authenticate user: {model.Email}");
+            var user = await _userRepository
+                .GetAll()
+                .FirstOrDefaultAsync(x => x.Email == model.Email);
+
+            if (user == null)
+                return new BaseResponse<UserEntity>()
+                {
+                    Description = "User with this email does not exist",
+                    StatusCode = StatusCode.UserDoesNotExist
+                };
+
+            var passwordVerified = BCrypt.Net.BCrypt.Verify(model.Password, user.HashedPassword);
+            if (passwordVerified)
+                return new BaseResponse<UserEntity>()
+                {
+                    Description = $"User authenticated - {user.Email}",
+                    StatusCode = StatusCode.OK
+                };
+            else
+                return new BaseResponse<UserEntity>()
+                {
+                    Description = "Incorrect Password",
+                    StatusCode = StatusCode.IncorrectPassword
+                };
         }
-        return Convert.ToBase64String(randomBytes);
+        catch (Exception e)
+        {
+            _logger.LogError($"[UserService.Authenticate]: {e.Message}");
+            return new BaseResponse<UserEntity>()
+            {
+                StatusCode = StatusCode.InternalServerError,
+                Description = e.Message
+            };
+        }
     }
 }

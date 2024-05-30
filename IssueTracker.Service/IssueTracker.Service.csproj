@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CryptoHelper" Version="4.0.0" />
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     </ItemGroup>
 
 </Project>

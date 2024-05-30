@@ -82,7 +82,7 @@ $('#createUser').on('click', function (event) {
             console.log(response)
         },
         error: function (response) {
-            alert("User not created")
+            alert("User not created: " + response.responseJSON.description)
             console.log(response)
         }
     })

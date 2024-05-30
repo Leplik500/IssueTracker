@@ -44,9 +44,18 @@ public class LandingController : Controller
     {
         var response = await _userService.Create(model);
         if (response.StatusCode == Domain.Enum.StatusCode.OK)
-        {
             return Ok(new {description = response.Description});
-        }
+
+        return BadRequest(new {description = response.Description});
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Authenthicate(CreateUserViewModel model)
+    {
+        var response = await _userService.Authenticate(model);
+        if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            return Ok(new {description = response.Description});
+
         return BadRequest(new {description = response.Description});
     }
 }

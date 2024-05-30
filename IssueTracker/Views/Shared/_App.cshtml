@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport"/>
+    <title>@ViewData["Title"] - IssueTracker</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
+    <link asp-append-version="true"
+          href="~/css/site.css"
+          rel="stylesheet"/>
+    <link asp-append-version="true"
+          href="~/css/menu.css"
+          rel="stylesheet"/>
+    <link asp-append-version="true"
+          href="~/css/table.css"
+          rel="stylesheet"/>
+    <style> 
+    .container {
+        border: dashed thick antiquewhite;
+        background: floralwhite;
+        margin-top: 5px;
+        padding: 5px;
+    }
+     </style>
+
+</head>
+<body>
+<header>
+    <div>
+        <ul class="menu">
+            <li>
+                <a asp-action="Login"
+                   asp-controller="Landing"
+                   class="link submenu-item">
+                    Sign in
+                </a>
+            </li>
+            <li>
+                <a class="link submenu-item"> Two </a>
+            </li>
+            <li>
+                <a class="link submenu-item"> Four </a>
+            </li>
+            <li>
+                <a asp-action="Index"
+                   asp-controller="Landing"
+                   class="link submenu-item">
+                    Home
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</header>
+<div class="container">
+    <main role="main" @*class="pb-3"*@>
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        &copy; 2024 - IssueTracker - <a asp-area="">Privacy</a>
+    </div>
+</footer>
+
+<!--include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+        type="text/javascript"></script>
+
+@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+<script asp-append-version="true"
+        src="~/js/site.js"></script>
+@await RenderSectionAsync("Scripts", false)
+</body>
+</html>

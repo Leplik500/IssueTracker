@@ -13,11 +13,12 @@ builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("Postgres");
-    options.UseNpgsql(connectionString);
-});
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("Postgres");
+        options.UseNpgsql(connectionString);
+    });
 
 var app = builder.Build();
 
@@ -42,6 +43,11 @@ app.MapControllerRoute(
     "action",
     "{action=Index}",
     new {controller = "Landing", action = "Index"});
+
+app.MapControllerRoute(
+    "app",
+    "/app",
+    new {controller = "App", action = "Index"});
 
 app.MapControllerRoute(
     "default",

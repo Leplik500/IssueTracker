@@ -32,19 +32,20 @@ jQuery('#loginForm').validate({
     }
 )
 
-// $('#login').on('click', function (event) {
-//     event.preventDefault();
-//     $.ajax({
-//         url: '/Create',
-//         method: 'POST',
-//         data: $('#registerForm').serialize(),
-//         success: function (response) {
-//             alert("User created successfully")
-//             console.log(response)
-//         },
-//         error: function (response) {
-//             alert("User not created")
-//             console.log(response)
-//         }
-//     })
-// });
+$('#loginUser').on('click', function (event) {
+    event.preventDefault();
+    $.ajax({
+        url: '/Authenthicate',
+        method: 'GET',
+        data: $('#loginForm').serialize(),
+        success: function (response) {
+            alert("User authenthicated successfully")
+            console.log(response)
+            window.location.href = '/Index';
+        },
+        error: function (response) {
+            alert("User not authenthicated: " + response.responseJSON.description)
+            console.log(response)
+        }
+    })
+});

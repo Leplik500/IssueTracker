@@ -7,4 +7,5 @@ namespace IssueTracker.Service.Interfaces;
 public interface IUserService
 {
     Task<IBaseResponse<UserEntity>> Create(CreateUserViewModel model);
+    Task<IBaseResponse<UserEntity>> Authenticate(CreateUserViewModel model);
 }
