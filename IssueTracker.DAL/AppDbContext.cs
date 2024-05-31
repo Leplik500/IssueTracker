@@ -12,4 +12,5 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<IssueEntity> Issues { get; set; }
 }

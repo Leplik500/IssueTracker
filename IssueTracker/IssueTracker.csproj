@@ -16,4 +16,8 @@
         <ProjectReference Include="..\IssueTracker.Service\IssueTracker.Service.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\App\Index.cshtml" />
+    </ItemGroup>
+
 </Project>

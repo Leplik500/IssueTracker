@@ -41,7 +41,7 @@ $('#loginUser').on('click', function (event) {
         success: function (response) {
             alert("User authenthicated successfully")
             console.log(response)
-            window.location.href = '/Index';
+            window.location.href = '/app';
         },
         error: function (response) {
             alert("User not authenthicated: " + response.responseJSON.description)

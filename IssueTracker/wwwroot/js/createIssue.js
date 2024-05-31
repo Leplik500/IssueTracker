@@ -1,4 +1,4 @@
-jQuery('#registerForm').validate({
+jQuery('#').validate({
         rules: {
             password: {
                 required: true,
@@ -71,19 +71,19 @@ jQuery('#registerForm').validate({
     }
 )
 
-$('#createUser').on('click', function (event) {
+$('#createIssue').on('click', function (event) {
     event.preventDefault();
     debugger
     $.ajax({
-        url: '/Create',
+        url: '/app/Create',
         method: 'POST',
-        data: $('#registerForm').serialize(),
+        data: $('#createIssueForm').serialize(),
         success: function (response) {
-            alert("User created successfully")
+            alert("Issue created successfully")
             console.log(response)
         },
         error: function (response) {
-            alert("User not created: " + response.responseJSON.description)
+            alert("Issue not created: " + response.responseJSON.description)
             console.log(response)
         }
     })

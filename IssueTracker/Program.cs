@@ -13,6 +13,9 @@ builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IBaseRepository<IssueEntity>, IssueRepository>();
+builder.Services.AddScoped<IIssueService, IssueService>();
 builder.Services.AddDbContext<AppDbContext>(
     options =>
     {

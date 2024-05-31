@@ -1,8 +1,56 @@
-@model dynamic
+@using IssueTracker.Domain.Enum
+@model IssueTracker.Domain.ViewModels.Issue.CreateIssueViewModel
 
 @{
     ViewBag.Title = "App Page";
     Layout = "_App";
 }
 
-<h2>title</h2>
+<form action="#"
+      id="createIssueForm">
+    <fieldset>
+        <p>
+            <label for="title"> Title </label>
+            <input id="title"
+                   name="title"
+                   type="text"/>
+        </p>
+        <div class="form-group">
+            <label for="description"> Description</label>
+            <textarea class="form-control"
+                      id="description"
+                      name="description"></textarea>
+        </div>
+        <p>
+            <label for="tags"> Tags, delimeted by space </label>
+            <input id="tags"
+                   name="tags"
+                   type="text"/>
+        </p>
+        <p>
+            <label for="priority"> Priority*</label>
+            <select asp-items="Html.GetEnumSelectList<IssuePriority>()"
+                    id="priority"
+                    name="priority"
+                    required>
+            </select>
+        </p>
+        <p>
+            <label for="assignees"> Assignees</label>
+            <select asp-items="@(new MultiSelectList(Model.AvaliableUsers))"
+                    class="form-control"
+                    id="assignees"
+                    multiple="multiple"
+                    name="assignees">
+            </select>
+        </p>
+
+        <button id="createIssue">
+            Create
+        </button>
+    </fieldset>
+</form>
+
+@section Scripts {
+    <script src="~/js/createIssue.js"></script>
+}

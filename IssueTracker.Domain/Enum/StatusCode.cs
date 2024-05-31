@@ -4,7 +4,8 @@ public enum StatusCode
 {
     UserIsHasAlready = 1,
     UserDoesNotExist = 2,
-    IncorrectPassword = 3,
+    UserIncorrectPassword = 3,
+    IssueIsHasAlready = 4,
     OK = 200,
     InternalServerError = 500
 }

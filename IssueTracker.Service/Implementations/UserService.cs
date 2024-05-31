@@ -94,7 +94,7 @@ public class UserService : IUserService
                 return new BaseResponse<UserEntity>()
                 {
                     Description = "Incorrect Password",
-                    StatusCode = StatusCode.IncorrectPassword
+                    StatusCode = StatusCode.UserIncorrectPassword
                 };
         }
         catch (Exception e)
@@ -105,6 +105,33 @@ public class UserService : IUserService
                 StatusCode = StatusCode.InternalServerError,
                 Description = e.Message
             };
+        }
+    }
+
+    public Task<IBaseResponse<IEnumerable<UserEntity>>> GetAll()
+    {
+        try
+        {
+            var users = _userRepository
+                .GetAll()
+                .ToList();
+
+            return Task.FromResult<IBaseResponse<IEnumerable<UserEntity>>>(
+                new BaseResponse<IEnumerable<UserEntity>>()
+                {
+                    Data = users,
+                    StatusCode = StatusCode.OK
+                });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"[UserService.GetAll]: {e.Message}");
+            return Task.FromResult<IBaseResponse<IEnumerable<UserEntity>>>(
+                new BaseResponse<IEnumerable<UserEntity>>()
+                {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = e.Message
+                });
         }
     }
 }
