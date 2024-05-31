@@ -15,7 +15,7 @@ public class AppController : Controller
         _userService = userService;
     }
 
-    public IActionResult Index()
+    public IActionResult CreateIssue()
     {
         var model = new CreateIssueViewModel()
         {
@@ -33,5 +33,10 @@ public class AppController : Controller
             return Ok(new {description = response.Description});
 
         return BadRequest(new {description = response.Description});
+    }
+
+    public IActionResult Issues()
+    {
+        return View();
     }
 }

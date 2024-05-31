@@ -44,17 +44,22 @@ app.MapControllers();
 
 app.MapControllerRoute(
     "action",
-    "{action=Index}",
+    "{action=CreateIssue}",
     new {controller = "Landing", action = "Index"});
 
 app.MapControllerRoute(
     "app",
-    "/app",
-    new {controller = "App", action = "Index"});
+    "app",
+    new {controller = "App", action = "Issues"});
+
+app.MapControllerRoute(
+    "appWithAction",
+    "app/{action}",
+    new {controller = "App", action = "CreateIssue"});
 
 app.MapControllerRoute(
     "default",
-    // "{controller=Landing}/{action=Index}/{id?}");
+    // "{controller=Landing}/{action=CreateIssue}/{id?}");
     "",
     new {controller = "Landing", action = "Index"});
 

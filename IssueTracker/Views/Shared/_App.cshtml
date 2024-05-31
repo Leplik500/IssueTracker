@@ -39,6 +39,36 @@
             <li>
                 <a class="link submenu-item"> Two </a>
             </li>
+            <li id="trigger">
+                <a class="link submenu-item"> Links </a>
+                <div class="navbar">
+                    <ul class="slide-in submenu">
+                        <li>
+                            @* <a href="http://localhost:5279/CreateIssue">Home</a> *@
+                            <a asp-action="Index"
+                               asp-controller="Landing"
+                               class="link submenu-item">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="Pricing"
+                               asp-controller="Landing"
+                               class="link submenu-item">
+                                Pricing
+                            </a>
+                        </li>
+                        <li>
+                            d
+                            <a asp-action="Privacy"
+                               asp-controller="Landing"
+                               class="link submenu-item">
+                                Privacy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li>
                 <a class="link submenu-item"> Four </a>
             </li>

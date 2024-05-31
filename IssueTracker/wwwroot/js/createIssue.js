@@ -1,4 +1,4 @@
-jQuery('#').validate({
+jQuery('#registerForm').validate({
         rules: {
             password: {
                 required: true,
@@ -75,7 +75,7 @@ $('#createIssue').on('click', function (event) {
     event.preventDefault();
     debugger
     $.ajax({
-        url: '/app/Create',
+        url: '/App/Create',
         method: 'POST',
         data: $('#createIssueForm').serialize(),
         success: function (response) {
