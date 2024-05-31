@@ -34,6 +34,16 @@ public class AppController : Controller
 
         return BadRequest(new {description = response.Description});
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> GetIssues()
+    {
+        var response = await _userService.GetAll();
+        if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            return Ok(new {description = response.Description});
+
+        return BadRequest(new {description = response.Description});
+    }
 
     public IActionResult Issues()
     {

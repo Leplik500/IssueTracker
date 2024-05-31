@@ -70,4 +70,31 @@ public class IssueService : IIssueService
             };
         }
     }
+    
+    public Task<IBaseResponse<IEnumerable<IssueEntity>>> GetAll()
+    {
+        try
+        {
+            var issues = _issueRepository
+                .GetAll()
+                .ToList();
+
+            return Task.FromResult<IBaseResponse<IEnumerable<IssueEntity>>>(
+                new BaseResponse<IEnumerable<IssueEntity>>()
+                {
+                    Data = issues,
+                    StatusCode = StatusCode.OK
+                });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"[IssueService.GetAll]: {e.Message}");
+            return Task.FromResult<IBaseResponse<IEnumerable<IssueEntity>>>(
+                new BaseResponse<IEnumerable<IssueEntity>>()
+                {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = e.Message
+                });
+        }
+    }
 }

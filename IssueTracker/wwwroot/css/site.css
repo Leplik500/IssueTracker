@@ -150,7 +150,3 @@ textarea {
 /*input:required:invalid:not(:placeholder-shown) {*/
 /*    border-color: red;*/
 /*}*/
-
-input:focus {
-    border: 3px solid rgba(169, 169, 169, 0.9);
-}
