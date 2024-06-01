@@ -70,31 +70,43 @@ public class IssueService : IIssueService
             };
         }
     }
-    
-    public Task<IBaseResponse<IEnumerable<IssueEntity>>> GetAll()
+
+    public async Task<IBaseResponse<IEnumerable<IssueViewModel>>> GetAll()
     {
         try
         {
-            var issues = _issueRepository
+            var issues = await _issueRepository
                 .GetAll()
-                .ToList();
+                .Select(
+                    x => new IssueViewModel
+                    {
+                        Description = x.Description,
+                        Assignees = x.Assignees,
+                        Comments = x.Comments,
+                        Title = x.Title,
+                        Tags = x.Tags,
+                        Status = x.Status,
+                        Priority = x.Priority,
+                        Created = x.Created
+                    })
+                .ToListAsync();
 
-            return Task.FromResult<IBaseResponse<IEnumerable<IssueEntity>>>(
-                new BaseResponse<IEnumerable<IssueEntity>>()
+            return
+                new BaseResponse<IEnumerable<IssueViewModel>>()
                 {
                     Data = issues,
                     StatusCode = StatusCode.OK
-                });
+                };
         }
         catch (Exception e)
         {
             _logger.LogError($"[IssueService.GetAll]: {e.Message}");
-            return Task.FromResult<IBaseResponse<IEnumerable<IssueEntity>>>(
-                new BaseResponse<IEnumerable<IssueEntity>>()
+            return
+                new BaseResponse<IEnumerable<IssueViewModel>>()
                 {
                     StatusCode = StatusCode.InternalServerError,
                     Description = e.Message
-                });
+                };
         }
     }
 }

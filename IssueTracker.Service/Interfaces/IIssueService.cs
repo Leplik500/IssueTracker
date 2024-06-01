@@ -7,5 +7,5 @@ namespace IssueTracker.Service.Interfaces;
 public interface IIssueService
 {
     Task<IBaseResponse<IssueEntity>> Create(CreateIssueViewModel model);
-    Task<IBaseResponse<IEnumerable<IssueEntity>>> GetAll();
+    Task<IBaseResponse<IEnumerable<IssueViewModel>>> GetAll();
 }

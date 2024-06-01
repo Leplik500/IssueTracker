@@ -1,6 +1,7 @@
 using IssueTracker.DAL.Interfaces;
 using IssueTracker.Domain.Enum;
 using IssueTracker.Domain.Response;
+using IssueTracker.Domain.ViewModels.Issue;
 using IssueTracker.Domain.ViewModels.User;
 using IssueTracker.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -108,30 +109,38 @@ public class UserService : IUserService
         }
     }
 
-    public Task<IBaseResponse<IEnumerable<UserEntity>>> GetAll()
+    public async Task<IBaseResponse<IEnumerable<UserViewModel>>> GetAll()
     {
         try
         {
-            var users = _userRepository
+            var users = await _userRepository
                 .GetAll()
-                .ToList();
+                .Select(
+                    x => new UserViewModel()
+                    {
+                        Email = x.Email,
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        Role = x.Role
+                    })
+                .ToListAsync();
 
-            return Task.FromResult<IBaseResponse<IEnumerable<UserEntity>>>(
-                new BaseResponse<IEnumerable<UserEntity>>()
+            return
+                new BaseResponse<IEnumerable<UserViewModel>>()
                 {
                     Data = users,
                     StatusCode = StatusCode.OK
-                });
+                };
         }
         catch (Exception e)
         {
             _logger.LogError($"[UserService.GetAll]: {e.Message}");
-            return Task.FromResult<IBaseResponse<IEnumerable<UserEntity>>>(
-                new BaseResponse<IEnumerable<UserEntity>>()
+            return
+                new BaseResponse<IEnumerable<UserViewModel>>()
                 {
                     StatusCode = StatusCode.InternalServerError,
                     Description = e.Message
-                });
+                };
         }
     }
 }

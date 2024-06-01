@@ -19,7 +19,12 @@ public class AppController : Controller
     {
         var model = new CreateIssueViewModel()
         {
-            AvaliableUsers = _userService.GetAll().Result.Data.Select(x => x.Email).ToList()
+            AvaliableUsers = _userService
+                .GetAll()
+                .Result
+                .Data
+                .Select(x => $"{x.Role} {x.FirstName} {x.LastName}, {x.Email}")
+                .ToList()
         };
 
         return View(model);
@@ -34,15 +39,12 @@ public class AppController : Controller
 
         return BadRequest(new {description = response.Description});
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> GetIssues()
     {
-        var response = await _userService.GetAll();
-        if (response.StatusCode == Domain.Enum.StatusCode.OK)
-            return Ok(new {description = response.Description});
-
-        return BadRequest(new {description = response.Description});
+        var response = await _issueService.GetAll();
+        return Json(new {data = response.Data});
     }
 
     public IActionResult Issues()

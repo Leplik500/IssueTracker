@@ -8,5 +8,5 @@ public interface IUserService
 {
     Task<IBaseResponse<UserEntity>> Create(CreateUserViewModel model);
     Task<IBaseResponse<UserEntity>> Authenticate(CreateUserViewModel model);
-    Task<IBaseResponse<IEnumerable<UserEntity>>> GetAll();
+    Task<IBaseResponse<IEnumerable<UserViewModel>>> GetAll();
 }
