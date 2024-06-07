@@ -1,3 +1,7 @@
+$('#newIssue').on('click', function () {
+    window.location.href = '/App/CreateIssue';
+});
+
 let dataTable = $('#issuesTable').DataTable({
     info: false,
     serverSide: true,
@@ -22,14 +26,14 @@ let dataTable = $('#issuesTable').DataTable({
         }
     ],
     createdRow: function (nRow, data) {
-        var handlerNew = function () {
-            
+        var handlerDetails = function () {
+
         }
-        
+
         for (var i = 0; i < dataTable.columns().header().length - 1; i++) {
             $('td', nRow).eq(i).css('cursor', 'pointer');
             $('td', nRow).eq(i).on('click', null);
         }
-        $('td button', nRow).on('click', null);
+        $('td button', nRow).on('click', handlerDetails());
     }
 })

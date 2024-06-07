@@ -13,4 +13,5 @@ public class CreateIssueViewModel
     // public List<FileInfo> Attachments { get; set; }
     public List<string> Tags { get; set; }
     public List<string> AvaliableUsers { get; set; }
+    public List<string> Assignees { get; set; }
 }

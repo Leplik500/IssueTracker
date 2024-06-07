@@ -1,16 +1,17 @@
 using IssueTracker.DAL.Interfaces;
 using IssueTracker.Domain.Entity;
 using IssueTracker.Domain.Enum;
+using IssueTracker.Domain.Extensions;
 using IssueTracker.Domain.Response;
 using IssueTracker.Domain.ViewModels.Issue;
+using IssueTracker.Domain.ViewModels.User;
 using IssueTracker.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace IssueTracker.Service.Implementations;
 
-public class IssueService : IIssueService
-{
+public class IssueService : IIssueService {
     private readonly IBaseRepository<IssueEntity> _issueRepository;
     private readonly IBaseRepository<UserEntity> _userRepository;
     private ILogger<IssueService> _logger;
@@ -24,8 +25,7 @@ public class IssueService : IIssueService
 
     public async Task<IBaseResponse<IssueEntity>> Create(CreateIssueViewModel model)
     {
-        try
-        {
+        try{
             _logger.LogInformation($"Create issue: {model.Title}");
             var issue = await _issueRepository
                 .GetAll()
@@ -38,20 +38,22 @@ public class IssueService : IIssueService
                     StatusCode = StatusCode.IssueIsHasAlready
                 };
 
-            var issueEntity = new IssueEntity()
-            {
-                Description = model.Description,
-                Assignees = _userRepository
-                    .GetAll()
-                    .Where(x => model.AvaliableUsers.Contains(x.Email))
-                    .ToList(),
-                Comments = new List<string>(),
-                Title = model.Title,
-                Tags = model.Tags[0].Split(" ").ToList(),
-                Status = IssueStatus.New,
-                Created = DateTime.UtcNow,
-                Id = Guid.NewGuid()
-            };
+            var issueEntity = new IssueEntity();
+
+            issueEntity.Description = model.Description;
+
+            var assigneeEmails = model.Assignees.Select(assignee => assignee.Split(',')[1].Trim()).ToList();
+            issueEntity.Assignees = _userRepository.GetAll()
+                .Where(user => assigneeEmails.Any(email => user.Email.Equals(email)))
+                .ToList();
+
+            issueEntity.Comments = new List<String>();
+            issueEntity.Title = model.Title;
+            issueEntity.Tags = model.Tags[0].Split(" ").ToList();
+            issueEntity.Status = IssueStatus.New;
+            issueEntity.Priority = model.Priority;
+            issueEntity.Created = DateTime.UtcNow;
+            issueEntity.Id = Guid.NewGuid();
 
             await _issueRepository.Create(issueEntity);
             return new BaseResponse<IssueEntity>()
@@ -60,8 +62,7 @@ public class IssueService : IIssueService
                 StatusCode = StatusCode.OK
             };
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             _logger.LogError($"[IssueService.Create]: {e.Message}");
             return new BaseResponse<IssueEntity>()
             {
@@ -73,22 +74,29 @@ public class IssueService : IIssueService
 
     public async Task<IBaseResponse<IEnumerable<IssueViewModel>>> GetAll()
     {
-        try
-        {
+        try{
             var issues = await _issueRepository
                 .GetAll()
                 .Select(
-                    x => new IssueViewModel
-                    {
-                        Description = x.Description,
-                        Assignees = x.Assignees,
-                        Comments = x.Comments,
-                        Title = x.Title,
-                        Tags = x.Tags,
-                        Status = x.Status,
-                        Priority = x.Priority,
-                        Created = x.Created
-                    })
+                x => new IssueViewModel
+                {
+                    Description = x.Description,
+                    Assignees = x.Assignees
+                        .Select(userEntity => new UserViewModel
+                        {
+                            Email = userEntity.Email,
+                            FirstName = userEntity.FirstName,
+                            LastName = userEntity.LastName,
+                            Role = userEntity.Role.GetDisplayName()
+                        })
+                        .ToList(),
+                    Comments = x.Comments,
+                    Title = x.Title,
+                    Tags = x.Tags,
+                    Status = x.Status.GetDisplayName(),
+                    Priority = x.Priority.GetDisplayName(),
+                    Created = x.Created.ToLongDateString()
+                })
                 .ToListAsync();
 
             return
@@ -98,8 +106,7 @@ public class IssueService : IIssueService
                     StatusCode = StatusCode.OK
                 };
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             _logger.LogError($"[IssueService.GetAll]: {e.Message}");
             return
                 new BaseResponse<IEnumerable<IssueViewModel>>()

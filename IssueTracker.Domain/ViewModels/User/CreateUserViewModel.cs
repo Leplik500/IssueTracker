@@ -13,7 +13,4 @@ public class CreateUserViewModel
     public string Password { get; set; }
 
     public int Age { get; set; }
-    //TODO: создать UserViewModel
-    //TODO: переделать GetIssues в контроллере как в видео Домоседа
-    //TODO: переделать логику получения пользователей как для Issues
 }

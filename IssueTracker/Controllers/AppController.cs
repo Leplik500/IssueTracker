@@ -51,4 +51,9 @@ public class AppController : Controller
     {
         return View();
     }
+
+    public IActionResult IssueDetails()
+    {
+        return View();
+    }
 }

@@ -1,17 +1,17 @@
 using IssueTracker.DAL.Interfaces;
 using IssueTracker.Domain.Enum;
+using IssueTracker.Domain.Extensions;
 using IssueTracker.Domain.Response;
 using IssueTracker.Domain.ViewModels.Issue;
 using IssueTracker.Domain.ViewModels.User;
 using IssueTracker.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using UserEntity = IssueTracker.Domain.Entity.UserEntity;
+using UserEntity=IssueTracker.Domain.Entity.UserEntity;
 
 namespace IssueTracker.Service.Implementations;
 
-public class UserService : IUserService
-{
+public class UserService : IUserService {
     private readonly IBaseRepository<UserEntity> _userRepository;
     private ILogger<UserService> _logger;
 
@@ -23,8 +23,7 @@ public class UserService : IUserService
 
     public async Task<IBaseResponse<UserEntity>> Create(CreateUserViewModel model)
     {
-        try
-        {
+        try{
             _logger.LogInformation($"Create user: {model.Email}");
             var user = await _userRepository
                 .GetAll()
@@ -45,10 +44,9 @@ public class UserService : IUserService
                 // Avatar = model.Avatar,
                 Email = model.Email,
                 Age = model.Age,
-                Created = DateTime.UtcNow
+                Created = DateTime.UtcNow,
+                HashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password)
             };
-
-            user.HashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
             await _userRepository.Create(user);
             return new BaseResponse<UserEntity>()
@@ -57,8 +55,7 @@ public class UserService : IUserService
                 StatusCode = StatusCode.OK
             };
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             _logger.LogError($"[UserService.Create]: {e.Message}");
             return new BaseResponse<UserEntity>()
             {
@@ -70,8 +67,7 @@ public class UserService : IUserService
 
     public async Task<IBaseResponse<UserEntity>> Authenticate(CreateUserViewModel model)
     {
-        try
-        {
+        try{
             _logger.LogInformation($"Authenticate user: {model.Email}");
             var user = await _userRepository
                 .GetAll()
@@ -98,8 +94,7 @@ public class UserService : IUserService
                     StatusCode = StatusCode.UserIncorrectPassword
                 };
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             _logger.LogError($"[UserService.Authenticate]: {e.Message}");
             return new BaseResponse<UserEntity>()
             {
@@ -111,18 +106,17 @@ public class UserService : IUserService
 
     public async Task<IBaseResponse<IEnumerable<UserViewModel>>> GetAll()
     {
-        try
-        {
+        try{
             var users = await _userRepository
                 .GetAll()
                 .Select(
-                    x => new UserViewModel()
-                    {
-                        Email = x.Email,
-                        FirstName = x.FirstName,
-                        LastName = x.LastName,
-                        Role = x.Role
-                    })
+                x => new UserViewModel()
+                {
+                    Email = x.Email,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Role = x.Role.GetDisplayName()
+                })
                 .ToListAsync();
 
             return
@@ -132,8 +126,7 @@ public class UserService : IUserService
                     StatusCode = StatusCode.OK
                 };
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             _logger.LogError($"[UserService.GetAll]: {e.Message}");
             return
                 new BaseResponse<IEnumerable<UserViewModel>>()

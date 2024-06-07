@@ -20,6 +20,7 @@ public class IssueRepository : IBaseRepository<IssueEntity>
 
     public IQueryable<IssueEntity> GetAll()
     {
+            
         return _appDbContext.Issues;
     }
 
