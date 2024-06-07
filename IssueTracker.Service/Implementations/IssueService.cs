@@ -50,7 +50,7 @@ public class IssueService : IIssueService {
             issueEntity.Comments = new List<String>();
             issueEntity.Title = model.Title;
             issueEntity.Tags = model.Tags[0].Split(" ").ToList();
-            issueEntity.Status = IssueStatus.New;
+            issueEntity.Status = issueEntity.Assignees.Count > 0 ? IssueStatus.Assigned : IssueStatus.New;
             issueEntity.Priority = model.Priority;
             issueEntity.Created = DateTime.UtcNow;
             issueEntity.Id = Guid.NewGuid();
