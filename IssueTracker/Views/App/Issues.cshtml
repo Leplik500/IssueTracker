@@ -4,10 +4,20 @@
     ViewBag.Title = "Issues";
     Layout = "_App";
 }
-<div id="issueDetailsModal"
-     style="display: none;">
-</div>
+
 <button id="newIssue">New Issue</button>
+
+<div class="modal"
+     id="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <span class="close-modal"
+              onclick="closeModal()">
+            &times;
+        </span>
+    </div>
+</div>
+
 <table id="issuesTable"
        style="width: 100%">
     <thead>
@@ -20,9 +30,6 @@
         </th>
         <th>
             Status
-        </th>
-        <th>
-            Action
         </th>
     </tr>
     </thead>

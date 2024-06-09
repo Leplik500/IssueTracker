@@ -6,6 +6,7 @@ using IssueTracker.Domain.ViewModels.User;
 namespace IssueTracker.Domain.ViewModels.Issue;
 
 public class IssueViewModel {
+    public Int64 Id { get; set; }
     [Display(Name = "Title")] public String Title { get; set; }
     [Display(Name = "Description")] public String Description { get; set; }
     [Display(Name = "Priority")] public String Priority { get; set; }

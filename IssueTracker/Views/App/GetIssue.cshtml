@@ -1,0 +1,37 @@
+@model IssueTracker.Domain.ViewModels.Issue.IssueViewModel
+
+<div class="container">
+    <div class="issue-header">
+        <h1 class="issue-title">@Model.Title</h1>
+        <button class="close-modal">&times;</button>
+        <div class="issue-meta">
+            <div class="issue-meta-item">
+                <span class="issue-meta-label">State: @Model.Status</span>
+            </div>
+            <div class="issue-meta-item">
+                <span class="issue-meta-label">
+                    Labels: @string.Join(", ",
+                                Model.Tags)
+                </span>
+            </div>
+            <div class="issue-meta-item">
+                <span class="issue-meta-label">Created: @Model.Created</span>
+            </div>
+        </div>
+    </div>
+    <div class="issue-body">
+        <p>@Model.Description</p>
+    </div>
+    <div class="issue-comment">
+        <div class="comment-header">
+            <span class="comment-author">Author Name</span>
+            <span class="comment-date">1 hour ago</span>
+        </div>
+        <div class="comment-content">
+            <p>Comment content goes here...</p>
+        </div>
+        <div class="comment-actions">
+            <button>Reply</button>
+        </div>
+    </div>
+</div>

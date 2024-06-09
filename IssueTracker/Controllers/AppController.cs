@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IssueTracker.Controllers;
 
-public class AppController : Controller
-{
+public class AppController : Controller {
     private readonly IIssueService _issueService;
     private readonly IUserService _userService;
 
@@ -47,12 +46,14 @@ public class AppController : Controller
         return Json(new {data = response.Data});
     }
 
-    public IActionResult Issues()
+    [HttpGet]
+    public async Task<IActionResult> GetIssue(long id)
     {
-        return View();
+        var response = await _issueService.GetIssue(id);
+        return PartialView(response.Data);
     }
 
-    public IActionResult IssueDetails()
+    public IActionResult Issues()
     {
         return View();
     }

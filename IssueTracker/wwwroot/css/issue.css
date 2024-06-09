@@ -1,0 +1,107 @@
+.issue-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.issue-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .issue-title {
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .issue-title {
+        font-size: 20px;
+        margin-bottom: 3px;
+    }
+}
+
+.issue-meta {
+    display: flex;
+    align-items: center;
+}
+
+.issue-meta-item {
+    margin-right: 10px;
+}
+
+.issue-meta-label {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #f1e05a;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .issue-meta-label {
+        font-size: 10px;
+        padding: 1px 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .issue-meta-label {
+        font-size: 8px;
+        padding: 1px;
+    }
+}
+
+.issue-body {
+    margin-bottom: 20px;
+}
+
+.issue-comment {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment-date {
+    font-size: 12px;
+    color: #999;
+}
+
+.comment-content {
+    margin-top: 5px;
+}
+
+.comment-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+.comment-actions button {
+    background-color: #f1e05a;
+    border: none;
+    color: #333;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+

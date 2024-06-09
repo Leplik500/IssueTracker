@@ -53,7 +53,6 @@ public class IssueService : IIssueService {
             issueEntity.Status = issueEntity.Assignees.Count > 0 ? IssueStatus.Assigned : IssueStatus.New;
             issueEntity.Priority = model.Priority;
             issueEntity.Created = DateTime.UtcNow;
-            issueEntity.Id = Guid.NewGuid();
 
             await _issueRepository.Create(issueEntity);
             return new BaseResponse<IssueEntity>()
@@ -80,6 +79,7 @@ public class IssueService : IIssueService {
                 .Select(
                 x => new IssueViewModel
                 {
+                    Id = x.Id,
                     Description = x.Description,
                     Assignees = x.Assignees
                         .Select(userEntity => new UserViewModel
@@ -110,6 +110,58 @@ public class IssueService : IIssueService {
             _logger.LogError($"[IssueService.GetAll]: {e.Message}");
             return
                 new BaseResponse<IEnumerable<IssueViewModel>>()
+                {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = e.Message
+                };
+        }
+    }
+    public async Task<IBaseResponse<IssueViewModel>> GetIssue(Int64 id)
+    {
+        try{
+            var issue = await _issueRepository
+                .GetAll()
+                .Include(i => i.Assignees)
+                .FirstOrDefaultAsync(x => id == x.Id);
+            if (issue == null)
+                return new BaseResponse<IssueViewModel>()
+                {
+                    Description = "Issue not found",
+                    StatusCode = StatusCode.IssueNotFound
+                };
+
+            var issueModel = new IssueViewModel
+            {
+                Id = issue.Id,
+                Description = issue.Description,
+                Assignees = issue.Assignees
+                    .Select(userEntity => new UserViewModel
+                    {
+                        Email = userEntity.Email,
+                        FirstName = userEntity.FirstName,
+                        LastName = userEntity.LastName,
+                        Role = userEntity.Role.GetDisplayName()
+                    })
+                    .ToList(),
+                Comments = issue.Comments,
+                Title = issue.Title,
+                Tags = issue.Tags,
+                Status = issue.Status.GetDisplayName(),
+                Priority = issue.Priority.GetDisplayName(),
+                Created = issue.Created.ToLongDateString()
+            };
+
+            return new BaseResponse<IssueViewModel>()
+                {
+                    Data = issueModel,
+                    StatusCode = StatusCode.OK
+                }
+                ;
+        }
+        catch (Exception e){
+            _logger.LogError($"[IssueService.GetIssue]: {e.Message}");
+            return
+                new BaseResponse<IssueViewModel>()
                 {
                     StatusCode = StatusCode.InternalServerError,
                     Description = e.Message

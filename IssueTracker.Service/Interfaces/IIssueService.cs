@@ -4,8 +4,8 @@ using IssueTracker.Domain.ViewModels.Issue;
 
 namespace IssueTracker.Service.Interfaces;
 
-public interface IIssueService
-{
+public interface IIssueService {
     Task<IBaseResponse<IssueEntity>> Create(CreateIssueViewModel model);
     Task<IBaseResponse<IEnumerable<IssueViewModel>>> GetAll();
+    Task<IBaseResponse<IssueViewModel>> GetIssue(long id);
 }
