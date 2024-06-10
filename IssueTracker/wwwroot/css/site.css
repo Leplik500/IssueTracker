@@ -143,6 +143,19 @@ textarea {
     box-sizing: border-box;
 }
 
+/*button {*/
+/*    --button-base: gainsboro;*/
+/*    --button-hover: lightgray;*/
+/*    --focus: darkgrey !important*/
+/*}*/
+
+/*:root {*/
+/*    --button-base: gainsboro !important;*/
+/*    --button-hover: lightgray !important;*/
+/*    --focus: gainsboro !important*/
+/*}*/
+
+
 /*input:required:valid:not(:placeholder-shown) {*/
 /*    border-color: green;*/
 /*}*/
