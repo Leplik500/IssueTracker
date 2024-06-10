@@ -12,6 +12,7 @@ public class IssueEntity {
     // TODO:
     // public long ProjectId { get; set; }
     // public List<FileInfo> Attachments { get; set; }
+    // public UserEntity Author { get; set; }
     public List<String> Tags { get; set; }
     public List<UserEntity> Assignees { get; set; }
     public List<String> Comments { get; set; }

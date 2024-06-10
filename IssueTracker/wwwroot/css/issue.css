@@ -16,6 +16,11 @@
         font-size: 22px;
         margin-bottom: 5px;
     }
+
+    .issue-meta-label {
+        font-size: 10px;
+        padding: 1px 2px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -23,15 +28,23 @@
         font-size: 20px;
         margin-bottom: 3px;
     }
+
+    .issue-meta-label {
+        font-size: 8px;
+        padding: 1px;
+    }
+
 }
 
 .issue-meta {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
 }
 
 .issue-meta-item {
-    margin-right: 10px;
+    margin-bottom: 5px;
 }
 
 .issue-meta-label {
@@ -44,22 +57,11 @@
     color: #333;
 }
 
-@media (max-width: 768px) {
-    .issue-meta-label {
-        font-size: 10px;
-        padding: 1px 2px;
-    }
-}
-
-@media (max-width: 480px) {
-    .issue-meta-label {
-        font-size: 8px;
-        padding: 1px;
-    }
-}
-
 .issue-body {
     margin-bottom: 20px;
+    padding-left: 2vw;
+    white-space-treatment: preserve;
+    white-space: pre-wrap;
 }
 
 .issue-comment {
