@@ -2,14 +2,11 @@ $('#newIssue').on('click', function () {
     window.location.href = '/App/CreateIssue';
 });
 
-
-//     document.getElementById('myModal').style.display = 'block';
-//     document.querySelector('.modal-overlay').style.display = 'block';
-
 function closeModal() {
     const modal = $('#modal');
     modal.removeClass('active');
     $('.modal-overlay').removeClass('active');
+    connection.stop();
 }
 
 function openModal(parameters) {
@@ -64,8 +61,7 @@ let dataTable = $('#issuesTable').DataTable({
     ],
     createdRow: function (nRow, data) {
         var handlerDetails = function () {
-            debugger;
-            openModal({url: '/App/GetIssue', data: data.id})
+            openModal({url: '/App/IssueDetails', data: data.id})
         }
 
         for (var i = 0; i < dataTable.columns().header().length; i++) {

@@ -30,16 +30,28 @@ p{
     <div class="issue-body">
         <p>@Model.Description</p>
     </div>
-    <div class="issue-comment">
-        <div class="comment-header">
-            <span class="comment-author">Author Name</span>
-            <span class="comment-date">1 hour ago</span>
-        </div>
-        <div class="comment-content">
-            <p>Comment content goes here...</p>
-        </div>
-        <div class="comment-actions">
-            <button>Reply</button>
-        </div>
+    <div class="issue-comments">
+        @foreach (var comment in Model.Comments){
+            <div class="issue-comment">
+                <p>@comment</p>
+            </div>
+        }
     </div>
+    <form action="#"
+          id="commentForm">
+        <input id="issueId"
+               type="hidden"
+               value="@Model.Id">
+        <div class="form-group">
+            <label for="commentInput">Add a comment:</label>
+            <input class="form-control"
+                   id="commentInput"
+                   placeholder="Enter your comment"
+                   type="text">
+        </div>
+        <button id="addComment">
+            Add Comment
+        </button>
+    </form>
 </div>
+<script src="~/js/issueDetails.js"></script>

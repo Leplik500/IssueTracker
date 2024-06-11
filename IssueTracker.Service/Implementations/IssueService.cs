@@ -14,7 +14,7 @@ namespace IssueTracker.Service.Implementations;
 public class IssueService : IIssueService {
     private readonly IBaseRepository<IssueEntity> _issueRepository;
     private readonly IBaseRepository<UserEntity> _userRepository;
-    private ILogger<IssueService> _logger;
+    private readonly ILogger<IssueService> _logger;
 
     public IssueService(IBaseRepository<IssueEntity> issueRepository, ILogger<IssueService> logger, IBaseRepository<UserEntity> userRepository)
     {
@@ -38,14 +38,16 @@ public class IssueService : IIssueService {
                     StatusCode = StatusCode.IssueIsHasAlready
                 };
 
-            var issueEntity = new IssueEntity();
-
-            issueEntity.Description = model.Description;
+            var issueEntity = new IssueEntity
+            {
+                Description = model.Description
+            };
 
             var assigneeEmails = model.Assignees.Select(assignee => assignee.Split(',')[1].Trim()).ToList();
             issueEntity.Assignees = _userRepository.GetAll()
                 .Where(user => assigneeEmails.Any(email => user.Email.Equals(email)))
                 .ToList();
+
 
             issueEntity.Comments = new List<String>();
             issueEntity.Title = model.Title;
@@ -159,7 +161,7 @@ public class IssueService : IIssueService {
                 ;
         }
         catch (Exception e){
-            _logger.LogError($"[IssueService.GetIssue]: {e.Message}");
+            _logger.LogError($"[IssueService.IssueDetails]: {e.Message}");
             return
                 new BaseResponse<IssueViewModel>()
                 {
@@ -167,5 +169,39 @@ public class IssueService : IIssueService {
                     Description = e.Message
                 };
         }
+    }
+
+    public async Task<IBaseResponse<String>> AddComment(String message, Int64 issueId)
+    {
+        try{
+            _logger.LogInformation($"Add comment: {message} to issue: {issueId}");
+            var issue = await _issueRepository
+                .GetAll()
+                .FirstOrDefaultAsync(x => issueId == x.Id);
+
+            if (issue == null)
+                return new BaseResponse<String>()
+                {
+                    Description = "Issue not found",
+                    StatusCode = StatusCode.IssueNotFound
+                };
+
+            issue.Comments.Add(message);
+            await _issueRepository.Update(issue);
+            return new BaseResponse<String>()
+            {
+                Description = $"Comment added - {message} - {issueId}",
+                StatusCode = StatusCode.OK
+            };
+        }
+        catch (Exception e){
+            _logger.LogError($"[IssueService.AddComment]: {e.Message}");
+            return new BaseResponse<String>()
+            {
+                StatusCode = StatusCode.InternalServerError,
+                Description = e.Message
+            };
+        }
+
     }
 }
