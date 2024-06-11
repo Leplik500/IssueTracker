@@ -4,11 +4,11 @@ namespace IssueTracker.Hubs;
 
 public class CommentsHub : Hub {
 
-    public async Task SendComment(String message, Int64 issueId)
+    public async Task SubscribeIssue(String issueId)
     {
-        await Clients.All.SendAsync("ReceiveComment", message, issueId);
+        await Groups.AddToGroupAsync(Context.ConnectionId, issueId);
     }
-
+    
     public override async Task OnConnectedAsync()
     {
         await base.OnConnectedAsync();

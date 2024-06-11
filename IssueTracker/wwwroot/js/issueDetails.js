@@ -3,9 +3,7 @@ var connection = new signalR.HubConnectionBuilder()
     .configureLogging(signalR.LogLevel.Information)
     .build();
 
-// Handle incoming comment
 connection.on("ReceiveComment", (message, issueId) => {
-        // Add the comment to the issue comments section
         debugger;
         var issueComments = document.querySelector(".issue-comments");
         var newComment = document.createElement("div");
@@ -15,11 +13,10 @@ connection.on("ReceiveComment", (message, issueId) => {
     }
 );
 
-// Submit the comment form
+var issueId = $("#issueId").val();
 $('#addComment').click(function (event) {
     debugger;
     event.preventDefault();
-    var issueId = parseInt($("#issueId").val());
     var message = $("#commentInput").val();
     $.ajax({
         url: '/App/AddComment',
@@ -36,8 +33,9 @@ $('#addComment').click(function (event) {
     $("#commentInput").val("");
 });
 
-// Start the connection
-connection.start().catch((err) => {
-        console.error(err.toString());
-    }
-);
+connection.start()
+    .then(() => {
+        connection.invoke("SubscribeIssue", issueId)
+            .catch(err => console.error(err));
+    })
+    .catch(err => console.error(err));

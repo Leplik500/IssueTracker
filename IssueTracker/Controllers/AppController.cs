@@ -58,13 +58,11 @@ public class AppController : Controller {
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddComment(String message, Int64 issueId)
+    public async Task<IActionResult> AddComment(String message, String issueId)
     {
-        var response = await _issueService.AddComment(message, issueId);
+        var response = await _issueService.AddComment(message, Convert.ToInt64(issueId));
         if (response.StatusCode == Domain.Enum.StatusCode.OK){
-            await _hubContext.Clients
-                .All
-                .SendAsync("ReceiveComment", message, issueId);
+            await _hubContext.Clients.Group(issueId).SendAsync("ReceiveComment", message, issueId);
             return Ok(new {description = response.Description});
         }
 
