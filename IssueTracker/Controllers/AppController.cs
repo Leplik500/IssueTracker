@@ -62,12 +62,12 @@ public class AppController : Controller {
     {
         var response = await _issueService.AddComment(message, Convert.ToInt64(issueId));
         if (response.StatusCode == Domain.Enum.StatusCode.OK){
+            message = await _issueService.ReplaceShortcodesWithEmojis(message);
             await _hubContext.Clients.Group(issueId).SendAsync("ReceiveComment", message, issueId);
             return Ok(new {description = response.Description});
         }
 
         return BadRequest(new {description = response.Description});
-
     }
 
     public IActionResult Issues()

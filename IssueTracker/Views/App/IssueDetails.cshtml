@@ -38,45 +38,10 @@ p{
         <p>@Model.Description</p>
     </div>
     <div class="issue-comments">
-        @{
-            var regex = ":([a-z_]+):";
-        }
         @foreach (var comment in Model.Comments){
-            var stringBuilder = new StringBuilder(comment);
-            var matches = Regex.Matches(comment, regex);
-            foreach (Match match in matches){
-                var replace = match
-                    .Value
-                    .Replace(":", "")
-                    .Replace("_", " ");
-                using var client = new HttpClient();
-                var request = new HttpRequestMessage(
-                    HttpMethod.Get,
-                    $"https://api.api-ninjas.com/v1/emoji?name={replace}");
-                request.Headers.Add("X-Api-Key", "yz2RIBcZ/VEWQViuds439g==tlunRhKQ6C5vSpzv");
-                using var response = await client.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                if (response.Content.Headers.ContentType?.MediaType == "application/json"){
-                    var options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
-                    var emoji = JsonSerializer
-                        .Deserialize<EmojiResponse[]>(response
-                            .Content.ReadAsStringAsync().Result,
-                            options)?[0].character;
-
-                    stringBuilder.Replace(match.Value, emoji);
-                }
-            }
-            if (matches.Count == 0){
-                <div class="issue-comment">
-                    <p>@comment</p>
-                </div>
-            }
-            else if (matches.Count > 0){
-                <div class="issue-comment">
-                    <p>@stringBuilder</p>
-                </div>
-            }
-
+            <div class="issue-comment">
+                <p>@comment</p>
+            </div>
         }
     </div>
     <form action="#"

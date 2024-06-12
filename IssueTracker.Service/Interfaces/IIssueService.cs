@@ -9,4 +9,5 @@ public interface IIssueService {
     Task<IBaseResponse<IEnumerable<IssueViewModel>>> GetAll();
     Task<IBaseResponse<IssueViewModel>> GetIssue(Int64 id);
     Task<IBaseResponse<String>> AddComment(String message, Int64 issueId);
+    Task<String> ReplaceShortcodesWithEmojis(String comment);
 }

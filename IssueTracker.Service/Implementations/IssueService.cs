@@ -8,6 +8,11 @@ using IssueTracker.Domain.ViewModels.User;
 using IssueTracker.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace IssueTracker.Service.Implementations;
 
@@ -132,26 +137,24 @@ public class IssueService : IIssueService {
                     StatusCode = StatusCode.IssueNotFound
                 };
 
-            var issueModel = new IssueViewModel
-            {
-                Id = issue.Id,
-                Description = issue.Description,
-                Assignees = issue.Assignees
-                    .Select(userEntity => new UserViewModel
-                    {
-                        Email = userEntity.Email,
-                        FirstName = userEntity.FirstName,
-                        LastName = userEntity.LastName,
-                        Role = userEntity.Role.GetDisplayName()
-                    })
-                    .ToList(),
-                Comments = issue.Comments,
-                Title = issue.Title,
-                Tags = issue.Tags,
-                Status = issue.Status.GetDisplayName(),
-                Priority = issue.Priority.GetDisplayName(),
-                Created = issue.Created.ToLongDateString()
-            };
+            var issueModel = new IssueViewModel();
+            issueModel.Id = issue.Id;
+            issueModel.Description = issue.Description;
+            issueModel.Assignees = issue.Assignees
+                .Select(userEntity => new UserViewModel
+                {
+                    Email = userEntity.Email,
+                    FirstName = userEntity.FirstName,
+                    LastName = userEntity.LastName,
+                    Role = userEntity.Role.GetDisplayName()
+                })
+                .ToList();
+            issueModel.Comments = await ReplaceShortcodesWithEmojis(issue.Comments);
+            issueModel.Title = issue.Title;
+            issueModel.Tags = issue.Tags;
+            issueModel.Status = issue.Status.GetDisplayName();
+            issueModel.Priority = issue.Priority.GetDisplayName();
+            issueModel.Created = issue.Created.ToLongDateString();
 
             return new BaseResponse<IssueViewModel>()
                 {
@@ -169,6 +172,55 @@ public class IssueService : IIssueService {
                     Description = e.Message
                 };
         }
+    }
+    private async Task<List<String>> ReplaceShortcodesWithEmojis(List<String> comments)
+    {
+        var changedComments = new List<String>();
+        foreach (var comment in comments){
+            var changedComment = await ReplaceShortcodesWithEmojis(comment);
+            changedComments.Add(changedComment);
+        }
+        return changedComments;
+    }
+
+    public async Task<String> ReplaceShortcodesWithEmojis(String comment)
+    {
+        var regex = ":([a-z_]+):";
+        var stringBuilder = new StringBuilder(comment);
+        var matches = Regex.Matches(comment, regex);
+        if (matches.Count == 0)
+            return comment;
+
+        foreach (Match match in matches){
+            var replace = match
+                .Value
+                .Replace(":", "")
+                .Replace("_", " ");
+            using var client = new HttpClient();
+            var request = new HttpRequestMessage(
+            HttpMethod.Get,
+            $"https://api.api-ninjas.com/v1/emoji?name={replace}");
+            request.Headers.Add("X-Api-Key", "yz2RIBcZ/VEWQViuds439g==tlunRhKQ6C5vSpzv");
+            using var response = await client.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.OK){
+                if (response.Content.Headers.ContentType?.MediaType == "application/json"){
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var jArray = JArray.Parse(jsonString);
+                    if (jArray.Count > 0){
+                        var jObject = (JObject) jArray[0];
+                        var emoji = jObject["character"]!.Value<String>();
+                        stringBuilder.Replace(match.Value, emoji);
+                    }
+                    else{
+                        return stringBuilder.ToString();
+                    }
+                }
+            }
+            else{
+                return stringBuilder.ToString();
+            }
+        }
+        return stringBuilder.ToString();
     }
 
     public async Task<IBaseResponse<String>> AddComment(String message, Int64 issueId)
