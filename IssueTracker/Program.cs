@@ -14,7 +14,9 @@ builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddSignalR(options => { options.EnableDetailedErrors = true; });
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
+builder.Services.AddScoped<IRedisRepository<EmojiEntity>, EmojiRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<RedisContext>();
 
 builder.Services.AddScoped<IBaseRepository<IssueEntity>, IssueRepository>();
 builder.Services.AddScoped<IIssueService, IssueService>();
@@ -23,6 +25,7 @@ options => {
     var connectionString = builder.Configuration.GetConnectionString("Postgres");
     options.UseNpgsql(connectionString);
 });
+
 
 var app = builder.Build();
 

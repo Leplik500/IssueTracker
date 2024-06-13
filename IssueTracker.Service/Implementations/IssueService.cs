@@ -19,13 +19,15 @@ namespace IssueTracker.Service.Implementations;
 public class IssueService : IIssueService {
     private readonly IBaseRepository<IssueEntity> _issueRepository;
     private readonly IBaseRepository<UserEntity> _userRepository;
+    private readonly IBaseRepository<EmojiEntity> _emojiRepository;
     private readonly ILogger<IssueService> _logger;
 
-    public IssueService(IBaseRepository<IssueEntity> issueRepository, ILogger<IssueService> logger, IBaseRepository<UserEntity> userRepository)
+    public IssueService(IBaseRepository<IssueEntity> issueRepository, ILogger<IssueService> logger, IBaseRepository<UserEntity> userRepository, IBaseRepository<EmojiEntity> emojiRepository)
     {
         _issueRepository = issueRepository;
         _logger = logger;
         _userRepository = userRepository;
+        _emojiRepository = emojiRepository;
     }
 
     public async Task<IBaseResponse<IssueEntity>> Create(CreateIssueViewModel model)

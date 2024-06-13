@@ -4,7 +4,6 @@ var connection = new signalR.HubConnectionBuilder()
     .build();
 
 connection.on("ReceiveComment", (message, issueId) => {
-        debugger;
         var issueComments = document.querySelector(".issue-comments");
         var newComment = document.createElement("div");
         newComment.classList.add("issue-comment");
@@ -15,7 +14,6 @@ connection.on("ReceiveComment", (message, issueId) => {
 
 var issueId = $("#issueId").val();
 $('#addComment').click(function (event) {
-    debugger;
     event.preventDefault();
     var message = $("#commentInput").val();
     $.ajax({
