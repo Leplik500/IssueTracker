@@ -4,7 +4,7 @@ using StackExchange.Redis;
 
 namespace IssueTracker.DAL.Repositories;
 
-public class EmojiRepository : IRedisRepository<EmojiEntity> {
+public class EmojiRepository : IRedisRepository {
 
     private readonly RedisContext _redisContext;
 
@@ -13,20 +13,20 @@ public class EmojiRepository : IRedisRepository<EmojiEntity> {
         _redisContext = redisContext;
     }
 
-    public async Task Create(EmojiEntity entity)
+    public async Task Create(String key, String value)
     {
-        await _redisContext.Database.SetAddAsync(entity.Shortcode, entity.Emoji);
+        await _redisContext.Database.StringSetAsync(key, value);
     }
-    public async Task<RedisValue> Get(String shortcode)
+    public async Task<RedisValue> Get(String key)
     {
-        return await _redisContext.Database.StringGetAsync(shortcode);
+        return await _redisContext.Database.StringGetAsync(key);
     }
-    public async Task Delete(String shortcode)
+    public async Task Delete(String key)
     {
-        await _redisContext.Database.KeyDeleteAsync(shortcode);
+        await _redisContext.Database.KeyDeleteAsync(key);
     }
-    public async Task<RedisValue> Update(EmojiEntity entity)
+    public async Task<RedisValue> Update(String key, String value)
     {
-        return await _redisContext.Database.StringGetSetAsync(entity.Shortcode, entity.Emoji);
+        return await _redisContext.Database.StringGetSetAsync(key, value);
     }
 }

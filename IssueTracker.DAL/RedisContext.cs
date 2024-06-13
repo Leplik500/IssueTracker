@@ -2,7 +2,7 @@ using StackExchange.Redis;
 
 namespace IssueTracker.DAL;
 
-public class RedisContext : IDisposable {
+public class RedisContext {
     private readonly ConnectionMultiplexer _connectionMultiplexer;
     public RedisContext(ConnectionMultiplexer connectionMultiplexer)
     {
@@ -10,10 +10,4 @@ public class RedisContext : IDisposable {
     }
 
     public IDatabaseAsync Database => _connectionMultiplexer.GetDatabase();
-    public void Dispose()
-    {
-        _connectionMultiplexer.Dispose();
-    }
-
-
 }

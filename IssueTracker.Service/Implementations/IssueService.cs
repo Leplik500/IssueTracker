@@ -6,9 +6,11 @@ using IssueTracker.Domain.Response;
 using IssueTracker.Domain.ViewModels.Issue;
 using IssueTracker.Domain.ViewModels.User;
 using IssueTracker.Service.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using StackExchange.Redis;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -19,10 +21,10 @@ namespace IssueTracker.Service.Implementations;
 public class IssueService : IIssueService {
     private readonly IBaseRepository<IssueEntity> _issueRepository;
     private readonly IBaseRepository<UserEntity> _userRepository;
-    private readonly IBaseRepository<EmojiEntity> _emojiRepository;
+    private readonly IRedisRepository _emojiRepository;
     private readonly ILogger<IssueService> _logger;
 
-    public IssueService(IBaseRepository<IssueEntity> issueRepository, ILogger<IssueService> logger, IBaseRepository<UserEntity> userRepository, IBaseRepository<EmojiEntity> emojiRepository)
+    public IssueService(IBaseRepository<IssueEntity> issueRepository, ILogger<IssueService> logger, IBaseRepository<UserEntity> userRepository, IRedisRepository emojiRepository)
     {
         _issueRepository = issueRepository;
         _logger = logger;
@@ -194,32 +196,43 @@ public class IssueService : IIssueService {
             return comment;
 
         foreach (Match match in matches){
-            var replace = match
+            var key = match
                 .Value
                 .Replace(":", "")
                 .Replace("_", " ");
-            using var client = new HttpClient();
-            var request = new HttpRequestMessage(
-            HttpMethod.Get,
-            $"https://api.api-ninjas.com/v1/emoji?name={replace}");
-            request.Headers.Add("X-Api-Key", "yz2RIBcZ/VEWQViuds439g==tlunRhKQ6C5vSpzv");
-            using var response = await client.SendAsync(request);
-            if (response.StatusCode == HttpStatusCode.OK){
-                if (response.Content.Headers.ContentType?.MediaType == "application/json"){
-                    var jsonString = await response.Content.ReadAsStringAsync();
-                    var jArray = JArray.Parse(jsonString);
-                    if (jArray.Count > 0){
-                        var jObject = (JObject) jArray[0];
-                        var emoji = jObject["character"]!.Value<String>();
-                        stringBuilder.Replace(match.Value, emoji);
+            var redisValue = await _emojiRepository.Get(key);
+
+            if (!redisValue.IsNull && redisValue.ToString().Length == 0)
+                continue;
+
+            if (redisValue.IsNull){
+                using var client = new HttpClient();
+                var request = new HttpRequestMessage(
+                HttpMethod.Get,
+                $"https://api.api-ninjas.com/v1/emoji?name={key}");
+                request.Headers.Add("X-Api-Key", "yz2RIBcZ/VEWQViuds439g==tlunRhKQ6C5vSpzv");
+                using var response = await client.SendAsync(request);
+                if (response.StatusCode == HttpStatusCode.OK){
+                    if (response.Content.Headers.ContentType?.MediaType == "application/json"){
+                        var jsonString = await response.Content.ReadAsStringAsync();
+                        var jArray = JArray.Parse(jsonString);
+                        if (jArray.Count > 0){
+                            var jObject = (JObject) jArray[0];
+                            var emoji = jObject["character"]!.Value<String>();
+                            await _emojiRepository.Create(key, emoji!);
+                            stringBuilder.Replace(match.Value, emoji);
+                        }
+                        else{
+                            await _emojiRepository.Create(key, "");
+                        }
                     }
-                    else{
-                        return stringBuilder.ToString();
-                    }
+                }
+                else{
+                    throw new BadHttpRequestException("Emoji API is not avaliable");
                 }
             }
             else{
-                return stringBuilder.ToString();
+                stringBuilder.Replace(match.Value, redisValue.ToString());
             }
         }
         return stringBuilder.ToString();

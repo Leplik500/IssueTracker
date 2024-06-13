@@ -6,6 +6,7 @@ using IssueTracker.Hubs;
 using IssueTracker.Service.Implementations;
 using IssueTracker.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,13 @@ builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddSignalR(options => { options.EnableDetailedErrors = true; });
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
-builder.Services.AddScoped<IRedisRepository<EmojiEntity>, EmojiRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddSingleton(_ => ConnectionMultiplexer.Connect
+    (builder.Configuration.GetConnectionString("Redis")!));
 builder.Services.AddScoped<RedisContext>();
+builder.Services.AddScoped<IRedisRepository, EmojiRepository>();
+
 
 builder.Services.AddScoped<IBaseRepository<IssueEntity>, IssueRepository>();
 builder.Services.AddScoped<IIssueService, IssueService>();

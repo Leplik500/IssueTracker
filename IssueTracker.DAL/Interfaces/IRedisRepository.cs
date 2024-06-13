@@ -2,10 +2,10 @@ using StackExchange.Redis;
 
 namespace IssueTracker.DAL.Interfaces;
 
-public interface IRedisRepository<T> {
-    Task Create(T entity);
+public interface IRedisRepository {
+    Task Create(String key, String value);
     Task<RedisValue> Get(String key);
     Task Delete(String key);
-    Task<RedisValue> Update(T entity);
+    Task<RedisValue> Update(String key, String value);
 
 }
