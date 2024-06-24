@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.9"
+services:
+  issuetracker:
+    build:
+      context: "/home/naotomo/RiderProjects/IssueTracker"
+      dockerfile: "IssueTracker/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/IssueTracker.dll"
+    environment:
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net7.0/IssueTracker.staticwebassets.runtime.CT.json"
+    image: "issuetracker:dev"
+    ports: []
+    volumes:
+    - "/home/naotomo/.aspnet/https:/root/.aspnet/https"
+    - "/home/naotomo/.microsoft/usersecrets:/root/.microsoft/usersecrets"
+    - "/home/naotomo/RiderProjects/IssueTracker/IssueTracker:/app:rw"
+    working_dir: "/app"
