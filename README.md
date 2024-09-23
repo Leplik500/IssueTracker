@@ -27,16 +27,13 @@
 - [ Overview](#overview)
 - [ Features](#features)
 - [ Repository Structure](#repository-structure)
-- [ Modules](#modules)
 - [ Getting Started](#getting-started)
     - [ Prerequisites](#prerequisites)
     - [ Installation](#installation)
     - [ Usage](#usage)
-    - [ Tests](#tests)
-- [ Project Roadmap](#project-roadmap)
+    - [ Deployment](#deployment)
 - [ Contributing](#contributing)
 - [ License](#license)
-- [ Acknowledgments](#acknowledgments)
 
 ---
 
@@ -73,7 +70,15 @@
 
 ###  Prerequisites
 
-**CSharp**: `version x.y.z`
+For deployment:  
+>   **Docker**: `  version 24.0 `  
+
+For local install:  
+>   **.NET**: `  version 7.0 `  
+>    **Redis**: `  version 7.2 `  
+>    **PostgreSQL**: `  version 15.7 `  
+>    **NGINX**: `  version 1.24 `  
+
 
 ###  Installation
 
@@ -90,7 +95,27 @@ Build the project from source:
 ```
 
 3. Install the required dependencies:
+
+#### PostgreSQL
+
+1. Install PostgreSQL from [the official website](https://www.postgresql.org/download/).
+2. Start the PostgreSQL service.
+3. Create a database named `issue_tracker` and set up the user credentials as specified in your application.
+
+#### Redis
+
+1. Install Redis from [the official website](https://redis.io/download).
+2. Start the Redis server with the default configuration.
+
+#### NGINX
+
+1. Install NGINX from [the official website](https://nginx.org/en/docs/install.html).
+2. Configure NGINX to serve your application by editing the `nginx.conf` file as needed.
+3. Start the NGINX service.
+
+Install dotnet packages and build project with commands:
 ```sh
+❯ dotnet restore
 ❯ dotnet build
 ```
 
@@ -102,15 +127,16 @@ To run the project, execute the following command:
 ❯ dotnet run
 ```
 
-###  Tests
+## Deployment
 
-Execute the test suite using the following command:
+To deploy this project run
 
 ```sh
-❯ dotnet test
+❯ docker-compose up --build
 ```
 
 ---
+<!--
 
 ##  Project Roadmap
 
@@ -119,7 +145,7 @@ Execute the test suite using the following command:
 - [ ] **`Task 3`**: Implement feature three.
 
 ---
-
+-->
 ##  Contributing
 
 Contributions are welcome! Here are several ways you can contribute:
@@ -169,10 +195,10 @@ Contributions are welcome! Here are several ways you can contribute:
 
 This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
----
+<!--
 
 ##  Acknowledgments
 
 - List any resources, contributors, inspiration, etc. here.
 
----
+-->
