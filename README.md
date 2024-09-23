@@ -71,13 +71,13 @@
 ###  Prerequisites
 
 For deployment:  
->   **Docker**: `  version 24.0 `  
+>   [**Docker**](https://www.docker.com/products/docker-desktop/)
 
 For local install:  
->   **.NET**: `  version 7.0 `  
->    **Redis**: `  version 7.2 `  
->    **PostgreSQL**: `  version 15.7 `  
->    **NGINX**: `  version 1.24 `  
+>   [**.NET**](https://dotnet.microsoft.com/ru-ru/download/dotnet/7.0): `  version 7.0 `   
+>   [**Redis**](https://github.com/redis/redis)  
+>   [**PostgreSQL**](https://www.postgresql.org/download/)  
+>   [**NGINX**](https://github.com/nginx/nginx/?tab=readme-ov-file#downloading-and-installing)  
 
 
 ###  Installation
@@ -97,21 +97,15 @@ Build the project from source:
 3. Install the required dependencies:
 
 #### PostgreSQL
-
-1. Install PostgreSQL from [the official website](https://www.postgresql.org/download/).
-2. Start the PostgreSQL service.
-3. Create a database named `issue_tracker` and set up the user credentials as specified in your application.
+1. Start the PostgreSQL service.
+2. Create a database and set up the user credentials as specified in ConnectionStrings in `appsettings.json`.
 
 #### Redis
-
-1. Install Redis from [the official website](https://redis.io/download).
-2. Start the Redis server with the default configuration.
+1. Start the Redis server with the default configuration.
 
 #### NGINX
-
-1. Install NGINX from [the official website](https://nginx.org/en/docs/install.html).
-2. Configure NGINX to serve your application by editing the `nginx.conf` file as needed.
-3. Start the NGINX service.
+1. Use `nginx.conf` file as configuration or change it as you need.
+2. Start the NGINX service.
 
 Install dotnet packages and build project with commands:
 ```sh
