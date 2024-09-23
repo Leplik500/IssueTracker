@@ -1,5 +1,3 @@
-[<img src="https://img.icons8.com/?size=512&id=55494&format=png" align="right" width="25%" padding-right="350">]()
-
 # `ISSUETRACKER`
 
 #### <code> Software to track issues in your projects</code>
@@ -26,19 +24,19 @@
 
 #####  Table of Contents
 
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ Repository Structure](#-repository-structure)
-- [ Modules](#-modules)
-- [ Getting Started](#-getting-started)
-    - [ Prerequisites](#-prerequisites)
-    - [ Installation](#-installation)
-    - [ Usage](#-usage)
-    - [ Tests](#-tests)
-- [ Project Roadmap](#-project-roadmap)
-- [ Contributing](#-contributing)
-- [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
+- [ Overview](#overview)
+- [ Features](#features)
+- [ Repository Structure](#repository-structure)
+- [ Modules](#modules)
+- [ Getting Started](#getting-started)
+    - [ Prerequisites](#prerequisites)
+    - [ Installation](#installation)
+    - [ Usage](#usage)
+    - [ Tests](#tests)
+- [ Project Roadmap](#project-roadmap)
+- [ Contributing](#contributing)
+- [ License](#license)
+- [ Acknowledgments](#acknowledgments)
 
 ---
 
