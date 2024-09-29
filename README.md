@@ -187,7 +187,7 @@ Contributions are welcome! Here are several ways you can contribute:
 
 ##  License
 
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+This project is protected under the [Mozilla Public License 2.0](https://choosealicense.com/licenses/mpl-2.0/) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/mpl-2.0/) file.
 
 <!--
 
